@@ -3,6 +3,13 @@ OwnCloud Crack
 ====
 A repository for OwnCloud hacking, originally intended only to bruteforce accounts. Later, more ideas came.
 
+
+Version enumeration
+-------
+Just check http://testdom41n.org/status.php
+Note that status.php can be removed, but some things may not work after that. Nearly all prod instnces have this enables.
+
+
 User enumeration
 -------
 
@@ -19,7 +26,7 @@ Get the source code from github and the follow the filenames from the core folde
     git clone https://github.com/owncloud/core
     cd core
     find -follow | sed 's/^\.\///g' > owncloud_files.txt
-    dirb https://testdomain.org owncloud_files.txt
+    dirb https://testdom41n.org owncloud_files.txt
 
 
 Bruteforce OwnCloud accounts using it's OCS API.
